@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Charts with Radio Buttons</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- AmCharts Library -->
+  <script src="https://cdn.amcharts.com/lib/5/index.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/xy.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/percent.js"></script>
+  <script src="https://cdn.amcharts.com/lib/5/themes/Animated.js"></script>
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .chart-container {
+      width: 100%;
+      height: 300px;
+      display: none; 
+    }
+
+    .chart-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .radio-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .footer-label {
+      text-align: center;
+      font-size: 16px;
+      font-weight: bold;
+      margin-top: 30px;
+      color: #6c757d;
+    }
+  </style>
+</head>
+<body>
+  <div class="container mt-5">
+    
+    <div class="row text-center">
+      <h1>Dashboard</h1>
+    </div>
+
+    <div class="radio-container">
+      <label class="form-check-label">
+        <input type="radio" name="chart-selector" value="all" class="form-check-input" checked> Show All Charts
+      </label>
+      <label class="form-check-label ms-3">
+        <input type="radio" name="chart-selector" value="barchart-container" class="form-check-input"> Bar Chart
+      </label>
+      <label class="form-check-label ms-3">
+        <input type="radio" name="chart-selector" value="chartdiv-histogram" class="form-check-input"> Histogram
+      </label>
+      <label class="form-check-label ms-3">
+        <input type="radio" name="chart-selector" value="chartdiv-pie" class="form-check-input"> Pie Chart
+      </label>
+      <label class="form-check-label ms-3">
+        <input type="radio" name="chart-selector" value="chartdiv-pyramid" class="form-check-input"> Pyramid Chart
+      </label>
+    </div>
+
+    <div class="chart-grid">
+      <div id="barchart-container" class="chart-container border rounded shadow-sm bg-light"></div>
+      <div id="chartdiv-histogram" class="chart-container border rounded shadow-sm bg-light"></div>
+      <div id="chartdiv-pie" class="chart-container border rounded shadow-sm bg-light"></div>
+      <div id="chartdiv-pyramid" class="chart-container border rounded shadow-sm bg-light"></div>
+    </div>
+  </div>
+
+  <script src="../static/Barchart.js"></script>
+  <script src="../static/Histogram.js"></script>
+  <script src="../static/Piechart.js"></script>
+  <script src="../static/pyramid.js"></script>
+
+  <script>
+    document.querySelectorAll('.chart-container').forEach(chart => {
+      chart.style.display = 'block';
+    });
+
+    document.querySelectorAll('input[name="chart-selector"]').forEach(radio => {
+      radio.addEventListener('change', (event) => {
+        const selectedValue = event.target.value;
+
+        if (selectedValue === 'all') {
+          document.querySelectorAll('.chart-container').forEach(chart => {
+            chart.style.display = 'block';
+          });
+        } else {
+          document.querySelectorAll('.chart-container').forEach(chart => {
+            chart.style.display = 'none';
+          });
+          
+          const selectedChart = document.getElementById(selectedValue);
+          if (selectedChart) {
+            selectedChart.style.display = 'block';
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
